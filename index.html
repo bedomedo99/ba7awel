@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0812;
+            --bg-accent: #1a1025;
+            --primary: #ff4d6d;
+            --primary-glow: rgba(255, 77, 109, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.14);
+            --text-main: #f8f9fa;
+            --text-muted: #cbd5e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, var(--bg-accent), var(--bg-dark) 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.55); /* زودنا الوضوح بدل 0.25 عشان تظهر أحلى */
+            font-size: 24px;
+            text-shadow: 0 0 12px rgba(255, 77, 109, 0.8); /* عملنا إضاءة وتوهج حوالين القلب */
+            animation: floatUp 8s infinite linear;
+            bottom: -50px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(0deg);
+                opacity: 0;
+            }
+            20% { opacity: 0.8; }
+            100% {
+                transform: translateY(-105vh) scale(1.3) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            width: 90%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(45deg, #fff, #ffb3c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            line-height: 1.9;
+            color: var(--text-muted);
+            font-size: 1.08rem;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        input[type="password"] {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 14px 24px;
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), #c9184a);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px var(--primary-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 77, 109, 0.6);
+        }
+
+        .btn-no {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            position: relative;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .actions-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+            min-height: 60px;
+            flex-wrap: wrap;
+        }
+
+        #error-msg {
+            color: #ff6b6b;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #page-2, #page-3 {
+            display: none;
+        }
+
+        .apology-box {
+            background: rgba(255, 77, 109, 0.08);
+            border: 1px solid rgba(255, 77, 109, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .apology-box p {
+            color: var(--text-main);
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .apology-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .heart-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- تصميم كارت الأغنية وصورة الغلاف --- */
+        .music-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 77, 109, 0.4);
+            border-radius: 20px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .song-cover-wrapper {
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .song-cover-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .song-cover-wrapper:hover img {
+            transform: scale(1.08);
+        }
+
+        .music-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .music-waves {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 25px;
+        }
+
+        .wave-bar {
+            width: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: soundWave 1.2s infinite ease-in-out;
+        }
+        .wave-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+        .wave-bar:nth-child(2) { height: 80%; animation-delay: 0.3s; }
+        .wave-bar:nth-child(3) { height: 100%; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 60%; animation-delay: 0.4s; }
+
+        @keyframes soundWave {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1.1); }
+        }
+
+        .song-lyrics {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffb3c1;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .long-text-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 25px;
+            text-align: right;
+            margin-bottom: 20px;
+            line-height: 2;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <div class="container">
+        
+        <!-- الصفحة الأولى: قفل الباسورد -->
+        <div id="page-1" class="glass-card">
+            <div class="heart-icon">🔐</div>
+            <h1>اقل حاجة تتعمل</h1>
+            <p>نفس باسورد اللاب</p>
+            
+            <div class="input-group">
+                <input type="password" id="passInput" placeholder="اكتبي الباسورد" onkeypress="checkEnter(event)">
+                <button class="btn" style="width: 100%;" onclick="verifyPassword()">دخول ❤️</button>
+            </div>
+            <div id="error-msg">الباسورد غلط💭</div>
+        </div>
+
+        <!-- الصفحة الثانية: الاعتذار الأول -->
+        <div id="page-2" class="glass-card">
+            <div class="heart-icon">❤️</div>
+            <h1>اقسم بالله كل كلمة من كل قلبي وقدها</h1>
+            
+            <div class="apology-box">
+                <p>
+                    أنا عارف اني غلطت وعارف ان غلطي كبير بس والله مقصد اي حاجة ولا فكرت ولا اسمح لحد يجيب سيرتك ولا جبت سيره حب انا بجد اسف اوي من كل قلبي وندمان ندم والله متتخيليه
+                </p>
+                <p>
+                    وعارف إن الخوف من رد الفعل ساعات بيخلي الواحد يتصرف بغباء بس الأغبى من كده إني أستحمل أشوف زعل في عيونك أو أحس إنك بعيدة عني والله مهعمل كده تاني ابدا انتي عارفه انتي غاليه عندي قد ايه غلطة مش هتتكرر
+                </p>
+                <p>
+                    إنتي أغلى حاجة دخلت حياتي وزعلك عندي بالدنيا وما فيها حقك عليا ومفيش أي كدبة في الدنيا تسوى دمعة واحدة من عينيكِ والنبي سامحيني ونبدأ صفحة بيضة مفيهاش غلطات مني تاني ولا هزعلك تاني وعد ممكن قبل متفتحي الصفحة اللي بعد دي تحاولي تتقبلي الكلام حتي لو شويه افتكري عبدالله اللي عارفاه انا زي منا يا ندى بحبك وزي منا بخاف عليكي
+                </p>
+            </div>
+
+            <div class="actions-group">
+                <button class="btn" onclick="goToPage(3)">
+                     ادخلي في كلام لسه هقوله بس علي الصوت سيكا وشيلي السايلنت <span>←</span>
+                </button>
+                <button class="btn btn-no" id="noBtnPage2" onmouseover="moveButton(this)" onclick="moveButton(this)" ontouchstart="moveButton(this)">
+                    لا
+                </button>
+            </div>
+        </div>
+
+        <!-- الصفحة الثالثة: صورة الأغنية + الأغنية + الكلام الكتير + الصلح -->
+        <div id="page-3" class="glass-card">
+            
+            <div class="music-card">
+                <!-- صورة غلاف الأغنية (حط صورتك هنا بمسار cover.jpg) -->
+                <div class="song-cover-wrapper">
+                    <img src="photo.jpg" alt="غلاف الأغنية">
+                </div>
+
+                <div class="music-header">
+                    <span>🎵</span>
+                    <div class="music-waves">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                    <span>❤️</span>
+                </div>
+                <div class="song-lyrics">
+                    يا كل حياتي وامالي ويا اجمل سنين موجودة وهتفضل<br>
+                    والله بشوف العمر فيكي انتي وبشوف الدنيا دي في عنيكي
+                </div>
+
+                <audio id="myAudio" src="song.mp3" preload="auto"></audio>
+            </div>
+
+            <div class="long-text-box">
+                <p style="margin-bottom: 15px;">
+                    والله ميهون عليا زعلك ابدا ومقدرش استحمل ده ومقدرش استحمل نبعد عن بعض انتي بقيتي جزء مني 
+                </p>
+                <p style="margin-bottom: 15px;">
+                    وجودك بيهون عليا الدنيا بحس اني مبسوط دايما بخاف عليكي وبحب ده اوي الفتره دي كلها انا مش عارف اكلمك كل شويه خايف بنزل الستريك واستناكي تشوفيها علشان اطمن عليكي
+                </p>
+                <p style="margin-bottom: 0;">
+                   فاكره اول مره قولتلك بموت فيكي كان علشان مركبتيش مع زياد ده ساعة الاتوبيس لما نادى عليكي كنت مبسوط اوي ولما كنت باخد العينه في المعمل كنتي خايفة عليا انا بجد بحبك اوي اوي ومش عايز حاجة غيرك في الدنيا دي كلها والنبي متحرمينيش من دي انا مش قد البعد عنك خالص ولا هبقى قده
+                </p>
+                <P style="margin-bottom: 0;">
+                    يا ندى انا بموت فيكي مش بحبك بس اقسم بالله بدوب كده لما بشوفك او اشوف ضحكتك بحب طريقتك بحب شخصيتك بحب عيونك اوي مش عايز في يوم مشوفهمش اقدر علي اي حاجة الا دي وبحب اوي وانا بجري عليكي اشتكيلك لو في حاجة في يومي واحكيلك اليوم كله وبحب اسمعك اوي وعايزك تبقي معايا طول العمر وابسطك دايما وابقي قد ثقتك فيا علشان خاطري اديني فرصه
+                </P>
+            </div>
+
+            <p style="font-weight: 600; color: #fff; margin-top: 15px;">
+                 اخر حاجة معرفش دي عادية ولا لا بس انا بتكلم من قلبي دلوقتي مش بفكريا ندى انا بعشق اي حاجة انتي لمستيها بس او قربتي منها ابسطها شنطة الكريب انا عاينها وهفضل عاينها علشان خاطري ممكن فرصه ارجع كل حاجة واوعدك هنبقى احسن من الاول❤️
+            </p>
+
+            <div class="actions-group">
+                <button class="btn" onclick="acceptApology()">
+                     ممكن فرصه ارجع كل حاجة واوعدك هنبقى احسن من الاول❤️
+                </button>
+                <button class="btn btn-no" id="noBtnPage3" onmouseover="moveButton(this)" onclick="moveButton(this)" ontouchstart="moveButton(this)">
+                    لا مش هديك
+                </button>
+            </div>
+
+            <div id="success-msg" style="display: none; margin-top: 20px; color: #ffb3c1; font-weight: 700; font-size: 1.1rem;">
+                ربنا ما يحرمني منك أبداً يا أحلى وأطيب قلب في الدنيا يا قمري يا كل حياتي❤️✨
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = "112307"; // الباسورد بتاعك هنا
+
+        function verifyPassword() {
+            const enteredPass = document.getElementById('passInput').value;
+            const errorMsg = document.getElementById('error-msg');
+            
+            if (enteredPass === CORRECT_PASSWORD) {
+                errorMsg.style.display = 'none';
+                goToPage(2);
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passInput').value = '';
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                verifyPassword();
+            }
+        }
+
+        // دي الجزئية الجديدة اللي بتحل مشكلة نطّة الزراير في الموبايل
+        function resetNoButton(btn) {
+            if (btn) {
+                btn.style.position = 'relative';
+                btn.style.left = 'auto';
+                btn.style.top = 'auto';
+                btn.style.zIndex = '1';
+                
+                const placeholder = btn.parentNode.querySelector('.btn-placeholder');
+                if (placeholder) {
+                    placeholder.remove();
+                }
+            }
+        }
+
+        function goToPage(pageNum) {
+            document.getElementById('page-1').style.display = 'none';
+            document.getElementById('page-2').style.display = 'none';
+            document.getElementById('page-3').style.display = 'none';
+
+            // عشان زراير "لا" ترجع مكانها لما تتنقل بين الصفحات
+            resetNoButton(document.getElementById('noBtnPage2'));
+            resetNoButton(document.getElementById('noBtnPage3'));
+
+            const targetPage = document.getElementById('page-' + pageNum);
+            targetPage.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const audio = document.getElementById('myAudio');
+            if (pageNum === 3) {
+                if (audio) {
+                    audio.currentTime = 0;
+                    audio.play().catch(err => {
+                        console.log("تم منع التشغيل التلقائي بواسطة المتصفح");
+                    });
+                }
+            } else {
+                if (audio) audio.pause();
+            }
+        }
+
+        function acceptApology() {
+            document.getElementById('success-msg').style.display = 'block';
+            const noBtn = document.getElementById('noBtnPage3');
+            if (noBtn) noBtn.style.display = 'none';
+        }
+
+        // حركة هروب زرار "لا" مع تثبيت مكانه بـ Placeholder عشان العناصر متتحركش
+        function moveButton(btn) {
+            if (btn.style.position !== 'fixed') {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'btn-placeholder';
+                placeholder.style.width = btn.offsetWidth + 'px';
+                placeholder.style.height = btn.offsetHeight + 'px';
+                placeholder.style.display = 'inline-block';
+                placeholder.style.flexShrink = '0';
+                btn.parentNode.insertBefore(placeholder, btn);
+                
+                btn.style.position = 'fixed';
+            }
+            
+            const maxX = window.innerWidth - btn.offsetWidth - 40;
+            const maxY = window.innerHeight - btn.offsetHeight - 40;
+
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            btn.style.zIndex = '999';
+        }
+
+        function createHeart() {
+            const heartsBg = document.getElementById('heartsBg');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 25 + 22) + 'px';
+            
+            heartsBg.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 9000);
+        }
+
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
